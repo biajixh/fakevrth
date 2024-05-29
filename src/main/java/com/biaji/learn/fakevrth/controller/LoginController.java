@@ -4,6 +4,8 @@ import com.biaji.learn.fakevrth.pojo.User;
 import com.biaji.learn.fakevrth.dto.response.Result;
 import com.biaji.learn.fakevrth.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,8 @@ public class LoginController {
     @Autowired
     UserService userService;
 
+    Logger logger = LoggerFactory.getLogger(LoginController.class);
+
     /**
      * 登录api
      * @param userLogin 用户信息请求
@@ -33,6 +37,7 @@ public class LoginController {
         username = HtmlUtils.htmlEscape(username);
 
         User user = userService.get(username,userLogin.getPassword());
+        logger.debug("user:{}",user);
         if(null == user){
             return new Result(400);
         }else {
